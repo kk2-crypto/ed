@@ -101,7 +101,7 @@ const initializeWasm = (env) => {
     }
     if (user && pass) {
         const authBytes = textEncoder.encode(btoa(`${user}:${pass}`));
-        wasmMem.set(authBytes, getHttpAuthPtr());
+        wasmMem。set(authBytes, getHttpAuthPtr());
         setHttpAuthLenWasm(authBytes.length);
         const userBytes = textEncoder.encode(user);
         const passBytes = textEncoder.encode(pass);
@@ -229,7 +229,7 @@ const _cH = async (targetAddrType, targetPortNum, httpAuth, addrBytes, limit) =>
     if (username) dynamicHeaders += `Proxy-Authorization: Basic ${btoa(`${username}:${password || ''}`)}\r\n`;
     const fullHeaders = new Uint8Array(dynamicHeaders.length * 3 + encodedStaticHeaders.length);
     const {written} = textEncoder.encodeInto(dynamicHeaders, fullHeaders);
-    fullHeaders.set(encodedStaticHeaders, written);
+    fullHeaders。set(encodedStaticHeaders, written);
     await writer.write(fullHeaders.subarray(0, written + encodedStaticHeaders.length));
     writer.releaseLock();
     const reader = proxySocket.readable.getReader();
@@ -393,7 +393,7 @@ const _cT = async ({hostname, port, username, password}, targetIp, targetPort) =
         let extra;
         [r, extra] = await readStun(dr);
         if (r?.type !== 0x10B) throw 0;
-        cr.releaseLock(), cw.releaseLock(), dw.releaseLock(), dr.releaseLock();
+        cr。releaseLock(), cw.releaseLock(), dw.releaseLock(), dr.releaseLock();
         return {readable: data.readable, writable: data.writable, close, extra};
     } catch {
         close();
@@ -502,7 +502,7 @@ const _cP = async (param, limit) => {
 };
 // 连接策略映射表
 const strategyExecutorMap = new Map([
-    [0, async ({addrType, port, addrBytes}) => {
+    [0， async ({addrType, port, addrBytes}) => {
         const hostname = binaryAddrToString(addrType, addrBytes);
         return _cc(hostname, port);
     }],
@@ -555,7 +555,7 @@ const _openConn = async (parsedRequest, request) => {
         list = cachedList;
     } else {
         if (clean.length < 6 || clean.length > 1024) {
-            list。push({type: 0}, {type: 3, param: _cM.get(request.cf?.colo) ?? _pA.US}, {type: 3, param: _fH});
+            list.push({type: 0}, {type: 3, param: _cM.get(request.cf?.colo) ?? _pA.US}, {type: 3, param: _fH});
         } else {
             const urlBytes = textEncoder.encode(clean);
             wasmMem.set(urlBytes, dataPtr);
