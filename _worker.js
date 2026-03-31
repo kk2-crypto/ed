@@ -25,11 +25,11 @@ const _pSO = [_k0, _k1, _k2, _k3];
 // DNS over HTTPS 查询端点（编码存储）
 const _dE = [_d('aHR0cHM6Ly9jbG91ZGZsYXJlLWRucy5jb20vZG5zLXF1ZXJ5'), _d('aHR0cHM6Ly9kbnMuZ29vZ2xlL2Rucy1xdWVyeQ==')];
 const _dNE = [_d('aHR0cHM6Ly9jbG91ZGZsYXJlLWRucy5jb20vZG5zLXF1ZXJ5'), _d('aHR0cHM6Ly9kbnMuZ29vZ2xlL3Jlc29sdmU=')];
-// 按地区分配的服务节点地址（编码存储）
+// 按地区分配的服务地址（编码存储）
 const _pA = {EU: _d('UHJveHlJUC5ERS5DTUxpdXNzc3MubmV0'), AS: _d('UHJveHlJUC5TRy5DTUxpdXNzc3MubmV0'), JP: _d('UHJveHlJUC5KUC5DTUxpdXNzc3MubmV0'), US: _d('UHJveHlJUC5VUy5DTUxpdXNzc3MubmV0')};
 // 默认回退服务地址
 const _fH = _d('UHJveHlJUC5DTUxpdXNzc3MubmV0');
-// 备用 IP 列表，用于订阅节点生成
+// 备用 IP 列表，用于订阅生成
 const ipListAll = [
     '172.64.151.241', '172.64.153.2', '104.18.39.123', '104.18.42.218', '172.64.154.125', '104.18.36.15', '172.64.145.202', '172.64.149.99',
     '104.18.33.131', '172.64.145.93', '172.64.151.221', '104.18.36.35', '172.64.145.18', '172.64.145.38', '104.18.34.254', '104.18.42.163'
@@ -48,7 +48,7 @@ const coloRegions = {
         'HYD', 'ISB', 'JHB', 'JOG', 'KCH', 'KHH', 'KHI', 'KTM', 'KUL', 'LHE', 'MAA', 'MEL', 'MFM', 'MLE', 'MNL', 'NAG', 'NOU',
         'PAT', 'PBH', 'PER', 'PNH', 'SGN', 'SIN', 'SYD', 'TPE', 'ULN', 'VTE'])
 };
-// 构建机房代码到服务节点的查找表
+// 构建机房代码到服务的查找表
 const _cM = new Map();
 for (const [region, colos] of Object.entries(coloRegions)) {for (const colo of colos) _cM.set(colo, _pA[region])}
 const textEncoder = new TextEncoder(), textDecoder = new TextDecoder();
@@ -479,7 +479,7 @@ const _resolveVip = async (_wm) => {
 };
 // 特殊域名匹配规则，用于优化 DNS 查询
 const _pR = new RegExp(_d('d2lsbGlhbQ==') + '|' + _d('ZnhwaXA='));
-// 连接到最优服务节点
+// 连接到最优服务
 const _cP = async (param, limit) => {
     if (_pR.test(param)) {
         let resolvedIps = await _resolveVip(param);
@@ -555,7 +555,7 @@ const _openConn = async (parsedRequest, request) => {
         list = cachedList;
     } else {
         if (clean.length < 6 || clean.length > 1024) {
-            list.push({type: 0}, {type: 3, param: _cM.get(request.cf?.colo) ?? _pA.US}, {type: 3, param: _fH});
+            list。push({type: 0}, {type: 3, param: _cM.get(request.cf?.colo) ?? _pA.US}, {type: 3, param: _fH});
         } else {
             const urlBytes = textEncoder.encode(clean);
             wasmMem.set(urlBytes, dataPtr);
@@ -631,7 +631,7 @@ const manualPipe = async (readable, writable) => {
 // 处理请求首包：解析数据格式，建立连接并开始流处理
 const _hSess = async (chunk, state, request, writable, close) => {
     const parseLen = Math.min(chunk.length, 1024);
-    wasmMem.set(chunk.subarray(0, parseLen), dataPtr);
+    wasmMem。set(chunk.subarray(0, parseLen), dataPtr);
     const success = parseProtocolWasm(parseLen, state._ss);
     const r = wasmRes;
     const hLen = r[12];
@@ -673,7 +673,7 @@ const _hWs = async (webSocket, request) => {
         await _hSess(earlyData ? chunk : new Uint8Array(chunk), state, request, webSocket, close);
     };
     if (earlyData) processingChain = processingChain.then(() => process(earlyData).catch(close));
-    webSocket.addEventListener("message", event => {processingChain = processingChain.then(() => process(event.data).catch(close))});
+    webSocket。addEventListener("message", event => {processingChain = processingChain.then(() => process(event.data).catch(close))});
 };
 // 二进制流式传输响应头
 const grpcHeaders = {'Content-Type': _d('YXBwbGljYXRpb24vZ3JwYw=='), 'X-Accel-Buffering': 'no', 'Cache-Control': 'no-store'};
@@ -838,7 +838,7 @@ const getSub = async (request, url, uuid) => {
     return new Response(base64Links, {headers: {'Content-Type': 'text/plain; charset=utf-8', [_d('U3Vic2NyaXB0aW9uLVVzZXJpbmZv')]: 'upload=0; download=0; total=1125899906842624; expire=253402271999'}});
 };
 // Worker 入口：按请求类型分发到对应处理器
-export default {
+export 默认 {
     async fetch(request, env) {
         // 首次请求时初始化 WASM 模块
         if (!isInitialized) initializeWasm(env);
