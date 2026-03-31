@@ -631,7 +631,7 @@ const manualPipe = async (readable, writable) => {
 // 处理请求首包：解析数据格式，建立连接并开始流处理
 const _hSess = async (chunk, state, request, writable, close) => {
     const parseLen = Math.min(chunk.length, 1024);
-    wasmMem。set(chunk.subarray(0, parseLen), dataPtr);
+    wasmMem.set(chunk.subarray(0, parseLen), dataPtr);
     const success = parseProtocolWasm(parseLen, state._ss);
     const r = wasmRes;
     const hLen = r[12];
@@ -673,7 +673,7 @@ const _hWs = async (webSocket, request) => {
         await _hSess(earlyData ? chunk : new Uint8Array(chunk), state, request, webSocket, close);
     };
     if (earlyData) processingChain = processingChain.then(() => process(earlyData).catch(close));
-    webSocket。addEventListener("message", event => {processingChain = processingChain.then(() => process(event.data).catch(close))});
+    webSocket.addEventListener("message", event => {processingChain = processingChain.then(() => process(event.data).catch(close))});
 };
 // 二进制流式传输响应头
 const grpcHeaders = {'Content-Type': _d('YXBwbGljYXRpb24vZ3JwYw=='), 'X-Accel-Buffering': 'no', 'Cache-Control': 'no-store'};
