@@ -101,7 +101,7 @@ const initializeWasm = (env) => {
     }
     if (user && pass) {
         const authBytes = textEncoder.encode(btoa(`${user}:${pass}`));
-        wasmMem。set(authBytes, getHttpAuthPtr());
+        wasmMem.set(authBytes, getHttpAuthPtr());
         setHttpAuthLenWasm(authBytes.length);
         const userBytes = textEncoder.encode(user);
         const passBytes = textEncoder.encode(pass);
@@ -229,7 +229,7 @@ const _cH = async (targetAddrType, targetPortNum, httpAuth, addrBytes, limit) =>
     if (username) dynamicHeaders += `Proxy-Authorization: Basic ${btoa(`${username}:${password || ''}`)}\r\n`;
     const fullHeaders = new Uint8Array(dynamicHeaders.length * 3 + encodedStaticHeaders.length);
     const {written} = textEncoder.encodeInto(dynamicHeaders, fullHeaders);
-    fullHeaders。set(encodedStaticHeaders, written);
+    fullHeaders.set(encodedStaticHeaders, written);
     await writer.write(fullHeaders.subarray(0, written + encodedStaticHeaders.length));
     writer.releaseLock();
     const reader = proxySocket.readable.getReader();
@@ -393,7 +393,7 @@ const _cT = async ({hostname, port, username, password}, targetIp, targetPort) =
         let extra;
         [r, extra] = await readStun(dr);
         if (r?.type !== 0x10B) throw 0;
-        cr。releaseLock(), cw.releaseLock(), dw.releaseLock(), dr.releaseLock();
+        cr.releaseLock(), cw.releaseLock(), dw.releaseLock(), dr.releaseLock();
         return {readable: data.readable, writable: data.writable, close, extra};
     } catch {
         close();
