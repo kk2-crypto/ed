@@ -1,5 +1,5 @@
 name = "edcloudwasm"
-main = "_worker.js"  # 你的 JS 逻辑代码
+main = "_worker.js"  
 compatibility_date = "2026-03-02"
 
 # pages中环境变量需要手动填写并重试部署才会生效
