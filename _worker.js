@@ -56,8 +56,8 @@ const textEncoder = new TextEncoder(), textDecoder = new TextDecoder();
 import wasmModule from './protocol.wasm';
 const instance = new WebAssembly.Instance(wasmModule);
 const _e = instance.exports;
-const {memory, getUuidPtr, getResultPtr, getDataPtr, getHttpAuthPtr, parseUrlWasm, initCredentialsWasm, getPanelHtmlPtr, getPanelHtmlLen, getErrorHtmlPtr, getErrorHtmlLen, getCorrectAddrTypeWasm, getTemplateWasm, getSecretStringWasm} = _e;
-const getSocks5AuthPtr = _e[_d('Z2V0U29ja3M1QXV0aFB0cg==')], setSocks5AuthLenWasm = _e[_d('c2V0U29ja3M1QXV0aExlbldhc20=')], parseProtocolWasm = _e[_d('cGFyc2VQcm90b2NvbFdhc20=')], setHttpAuthLenWasm = _e.setHttpAuthLenWasm;
+const {memory, _gUP: getUuidPtr, _gRP: getResultPtr, _gDP: getDataPtr, _gHA: getHttpAuthPtr, _pUW: parseUrlWasm, _iCW: initCredentialsWasm, _iUK: initUrlKeysWasm, _gPHP: getPanelHtmlPtr, _gPHL: getPanelHtmlLen, _gEHP: getErrorHtmlPtr, _gEHL: getErrorHtmlLen, _gCAT: getCorrectAddrTypeWasm, _gTW: getTemplateWasm, _gSS: getSecretStringWasm} = _e;
+const getSocks5AuthPtr = _e[_d('X2dTQQ==')], setSocks5AuthLenWasm = _e[_d('X3NTQUw=')], parseProtocolWasm = _e[_d('X3BQVw==')], setHttpAuthLenWasm = _e[_d('X3NIQUw=')];
 const wasmMem = new Uint8Array(memory.buffer);
 const wasmRes = new Int32Array(memory.buffer, getResultPtr(), 32);
 const dataPtr = getDataPtr();
@@ -85,6 +85,7 @@ const getEnv = (env) => {
 };
 // 初始化 WASM 实例：写入凭证、生成模板、加载字符串表
 const initializeWasm = (env) => {
+    initUrlKeysWasm();
     const {uuid, password, user, pass} = getEnv(env);
     const cleanUuid = uuid.replace(/-/g, "");
     if (cleanUuid.length === 32) {
